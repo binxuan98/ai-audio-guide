@@ -1,0 +1,14 @@
+{
+    "pages": [
+      "pages/index/index"
+    ],
+    "window": {
+      "navigationBarTitleText": "AI语音导览"
+    },
+    "permission": {
+      "scope.userLocation": {
+        "desc": "需要获取您的地理位置，用于地图导览"
+      }
+    }
+  }
+  

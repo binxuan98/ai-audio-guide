@@ -1,0 +1,10 @@
+<view class="container">
+  <map
+    id="map"
+    latitude="{{latitude}}"
+    longitude="{{longitude}}"
+    scale="16"
+    show-location="true"
+    style="width: 100%; height: 100vh;"
+  />
+</view>
