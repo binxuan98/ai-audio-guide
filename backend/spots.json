@@ -61,12 +61,6 @@
     "longitude": 105.6874,
     "description": "大地湾遗址是新石器时代文化遗址，距今已有8000多年历史。",
     "audio": "https://example.com/audio/dadiwan.mp3"
-  },
-  {
-    "name": "金昌骊靬古城",
-    "latitude": 38.5145,
-    "longitude": 102.1944,
-    "description": "骊靬古城传说是古罗马军团后裔居住地，极具传奇色彩。",
-    "audio": "https://example.com/audio/liqian.mp3"
   }
+  
 ]
