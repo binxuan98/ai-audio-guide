@@ -1,4 +1,5 @@
 {
+
     "libVersion": "3.8.8",
     "projectname": "map",
     "setting": {
@@ -19,4 +20,5 @@
         "ignoreDevUnusedFiles": true,
         "bigPackageSizeSupport": false
     }
+
 }

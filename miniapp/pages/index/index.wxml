@@ -7,15 +7,4 @@
     show-location="true"
     style="width: 100%; height: 100vh;"
   />
-</view>
-<view>当前定位：</view>
-<view>纬度：{{latitude}}</view>
-<view>经度：{{longitude}}</view>
-
-<map 
-  latitude="{{latitude}}" 
-  longitude="{{longitude}}" 
-  scale="16" 
-  style="width: 100%; height: 300px;">
-</map>
 
