@@ -1,0 +1,72 @@
+[
+  {
+    "name": "敦煌莫高窟",
+    "latitude": 40.0453,
+    "longitude": 94.8090,
+    "description": "莫高窟是世界著名的佛教艺术宝库，被誉为“东方卢浮宫”。",
+    "audio": "https://example.com/audio/mogao.mp3"
+  },
+  {
+    "name": "嘉峪关关城",
+    "latitude": 39.7715,
+    "longitude": 98.2893,
+    "description": "嘉峪关是明长城最西端的关隘，有“天下第一雄关”之称。",
+    "audio": "https://example.com/audio/jiayuguan.mp3"
+  },
+  {
+    "name": "张掖七彩丹霞",
+    "latitude": 38.9901,
+    "longitude": 100.1394,
+    "description": "七彩丹霞因色彩斑斓的岩层而闻名，是中国最美地貌之一。",
+    "audio": "https://example.com/audio/danxia.mp3"
+  },
+  {
+    "name": "兰州黄河铁桥（中山桥）",
+    "latitude": 36.0620,
+    "longitude": 103.8353,
+    "description": "中山桥是黄河上最早的钢架桥梁之一，被誉为“黄河第一桥”。",
+    "audio": "https://example.com/audio/zhongshanqiao.mp3"
+  },
+  {
+    "name": "拉卜楞寺",
+    "latitude": 35.5581,
+    "longitude": 102.5070,
+    "description": "拉卜楞寺是藏传佛教格鲁派六大寺之一，藏文化重镇。",
+    "audio": "https://example.com/audio/labuleng.mp3"
+  },
+  {
+    "name": "麦积山石窟",
+    "latitude": 34.5700,
+    "longitude": 106.0250,
+    "description": "麦积山石窟是中国四大石窟之一，以精美泥塑闻名。",
+    "audio": "https://example.com/audio/maijishan.mp3"
+  },
+  {
+    "name": "武威雷台汉墓",
+    "latitude": 37.9283,
+    "longitude": 102.6375,
+    "description": "雷台汉墓出土著名青铜器“马踏飞燕”，具有极高历史价值。",
+    "audio": "https://example.com/audio/leitaimuseum.mp3"
+  },
+  {
+    "name": "临夏八坊十三巷",
+    "latitude": 35.6027,
+    "longitude": 103.2102,
+    "description": "八坊十三巷是回族传统聚居区，具有浓郁民族文化风情。",
+    "audio": "https://example.com/audio/bafang.mp3"
+  },
+  {
+    "name": "山丹军马场",
+    "latitude": 38.4807,
+    "longitude": 101.0881,
+    "description": "山丹军马场为亚洲最大军马场，有着悠久的养马历史。",
+    "audio": "https://example.com/audio/shandan.mp3"
+  },
+  {
+    "name": "永靖刘家峡水电站",
+    "latitude": 35.9424,
+    "longitude": 103.3850,
+    "description": "刘家峡是黄河上重要的水利枢纽工程，也是旅游观光胜地。",
+    "audio": "https://example.com/audio/liujiaxia.mp3"
+  }
+]
