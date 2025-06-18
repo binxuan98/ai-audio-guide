@@ -61,12 +61,6 @@
     "longitude": 101.0881,
     "description": "山丹军马场为亚洲最大军马场，有着悠久的养马历史。",
     "audio": "https://example.com/audio/shandan.mp3"
-  },
-  {
-    "name": "永靖刘家峡水电站",
-    "latitude": 35.9424,
-    "longitude": 103.3850,
-    "description": "刘家峡是黄河上重要的水利枢纽工程，也是旅游观光胜地。",
-    "audio": "https://example.com/audio/liujiaxia.mp3"
   }
+  
 ]
