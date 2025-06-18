@@ -1,7 +1,7 @@
 Page({
     data: {
       latitude: 0,
-      longitude: 0
+      longitude: 0 
     },
   
     onLoad() {
