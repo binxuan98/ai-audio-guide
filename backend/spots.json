@@ -1,66 +1,72 @@
 [
   {
-    "name": "敦煌莫高窟",
-    "latitude": 40.0453,
-    "longitude": 94.8090,
-    "description": "莫高窟是世界著名的佛教艺术宝库，被誉为“东方卢浮宫”。",
-    "audio": "https://example.com/audio/mogao.mp3"
+    "name": "永靖刘家峡水电站",
+    "latitude": 35.9424,
+    "longitude": 103.3850,
+    "description": "刘家峡是黄河上重要的水利枢纽工程，也是旅游观光胜地。",
+    "audio": "https://example.com/audio/liujiaxia.mp3"
   },
   {
-    "name": "嘉峪关关城",
-    "latitude": 39.7715,
-    "longitude": 98.2893,
-    "description": "嘉峪关是明长城最西端的关隘，有“天下第一雄关”之称。",
-    "audio": "https://example.com/audio/jiayuguan.mp3"
+    "name": "平凉崆峒山",
+    "latitude": 35.5260,
+    "longitude": 106.6818,
+    "description": "崆峒山是中国道教圣地，因“崆峒问道”而闻名。",
+    "audio": "https://example.com/audio/kongtong.mp3"
   },
   {
-    "name": "张掖七彩丹霞",
-    "latitude": 38.9901,
-    "longitude": 100.1394,
-    "description": "七彩丹霞因色彩斑斓的岩层而闻名，是中国最美地貌之一。",
-    "audio": "https://example.com/audio/danxia.mp3"
+    "name": "会宁红军长征会师旧址",
+    "latitude": 35.6926,
+    "longitude": 105.0522,
+    "description": "红军三大主力在此胜利会师，是中国革命的重要历史见证地。",
+    "audio": "https://example.com/audio/huining.mp3"
   },
   {
-    "name": "兰州黄河铁桥（中山桥）",
-    "latitude": 36.0620,
-    "longitude": 103.8353,
-    "description": "中山桥是黄河上最早的钢架桥梁之一，被誉为“黄河第一桥”。",
-    "audio": "https://example.com/audio/zhongshanqiao.mp3"
+    "name": "甘南玛曲草原",
+    "latitude": 33.9983,
+    "longitude": 102.0750,
+    "description": "玛曲草原是黄河第一大弯所在地，风光壮丽，藏族风情浓厚。",
+    "audio": "https://example.com/audio/maqu.mp3"
   },
   {
-    "name": "拉卜楞寺",
-    "latitude": 35.5581,
-    "longitude": 102.5070,
-    "description": "拉卜楞寺是藏传佛教格鲁派六大寺之一，藏文化重镇。",
-    "audio": "https://example.com/audio/labuleng.mp3"
+    "name": "白银黄河石林",
+    "latitude": 36.7016,
+    "longitude": 104.1421,
+    "description": "黄河石林地貌奇特，是《神雕侠侣》等影视作品拍摄地。",
+    "audio": "https://example.com/audio/huangheshilin.mp3"
   },
   {
-    "name": "麦积山石窟",
-    "latitude": 34.5700,
-    "longitude": 106.0250,
-    "description": "麦积山石窟是中国四大石窟之一，以精美泥塑闻名。",
-    "audio": "https://example.com/audio/maijishan.mp3"
+    "name": "甘南郎木寺",
+    "latitude": 34.0652,
+    "longitude": 102.4893,
+    "description": "郎木寺是藏传佛教圣地，集寺庙、峡谷、草原于一体的风景区。",
+    "audio": "https://example.com/audio/langmu.mp3"
   },
   {
-    "name": "武威雷台汉墓",
-    "latitude": 37.9283,
-    "longitude": 102.6375,
-    "description": "雷台汉墓出土著名青铜器“马踏飞燕”，具有极高历史价值。",
-    "audio": "https://example.com/audio/leitaimuseum.mp3"
+    "name": "武山水帘洞",
+    "latitude": 34.7194,
+    "longitude": 105.0079,
+    "description": "水帘洞石窟群为佛教艺术珍品，洞内有精美壁画和造像。",
+    "audio": "https://example.com/audio/shuiliandong.mp3"
   },
   {
-    "name": "临夏八坊十三巷",
-    "latitude": 35.6027,
-    "longitude": 103.2102,
-    "description": "八坊十三巷是回族传统聚居区，具有浓郁民族文化风情。",
-    "audio": "https://example.com/audio/bafang.mp3"
+    "name": "酒泉卫星发射中心",
+    "latitude": 40.9600,
+    "longitude": 100.2980,
+    "description": "中国航天重要基地之一，可感受航天精神与科学魅力。",
+    "audio": "https://example.com/audio/jiuquan.mp3"
   },
   {
-    "name": "山丹军马场",
-    "latitude": 38.4807,
-    "longitude": 101.0881,
-    "description": "山丹军马场为亚洲最大军马场，有着悠久的养马历史。",
-    "audio": "https://example.com/audio/shandan.mp3"
+    "name": "秦安大地湾遗址",
+    "latitude": 34.8884,
+    "longitude": 105.6874,
+    "description": "大地湾遗址是新石器时代文化遗址，距今已有8000多年历史。",
+    "audio": "https://example.com/audio/dadiwan.mp3"
+  },
+  {
+    "name": "金昌骊靬古城",
+    "latitude": 38.5145,
+    "longitude": 102.1944,
+    "description": "骊靬古城传说是古罗马军团后裔居住地，极具传奇色彩。",
+    "audio": "https://example.com/audio/liqian.mp3"
   }
-  
 ]
