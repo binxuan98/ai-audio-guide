@@ -1,0 +1,68 @@
+[
+  {
+
+    "name": "永靖刘家峡水电站",
+    "latitude": 35.9424,
+    "longitude": 103.3850,
+    "description": "刘家峡是黄河上重要的水利枢纽工程，也是旅游观光胜地。",
+    "audio": "https://example.com/audio/liujiaxia.mp3"
+  },
+  {
+    "name": "平凉崆峒山",
+    "latitude": 35.5260,
+    "longitude": 106.6818,
+    "description": "崆峒山是中国道教圣地，因“崆峒问道”而闻名。",
+    "audio": "https://example.com/audio/kongtong.mp3"
+  },
+  {
+    "name": "会宁红军长征会师旧址",
+    "latitude": 35.6926,
+    "longitude": 105.0522,
+    "description": "红军三大主力在此胜利会师，是中国革命的重要历史见证地。",
+    "audio": "https://example.com/audio/huining.mp3"
+  },
+  {
+    "name": "甘南玛曲草原",
+    "latitude": 33.9983,
+    "longitude": 102.0750,
+    "description": "玛曲草原是黄河第一大弯所在地，风光壮丽，藏族风情浓厚。",
+    "audio": "https://example.com/audio/maqu.mp3"
+  },
+  {
+    "name": "白银黄河石林",
+    "latitude": 36.7016,
+    "longitude": 104.1421,
+    "description": "黄河石林地貌奇特，是《神雕侠侣》等影视作品拍摄地。",
+    "audio": "https://example.com/audio/huangheshilin.mp3"
+  },
+  {
+    "name": "甘南郎木寺",
+    "latitude": 34.0652,
+    "longitude": 102.4893,
+    "description": "郎木寺是藏传佛教圣地，集寺庙、峡谷、草原于一体的风景区。",
+    "audio": "https://example.com/audio/langmu.mp3"
+  },
+  {
+    "name": "武山水帘洞",
+    "latitude": 34.7194,
+    "longitude": 105.0079,
+    "description": "水帘洞石窟群为佛教艺术珍品，洞内有精美壁画和造像。",
+    "audio": "https://example.com/audio/shuiliandong.mp3"
+  },
+  {
+    "name": "酒泉卫星发射中心",
+    "latitude": 40.9600,
+    "longitude": 100.2980,
+    "description": "中国航天重要基地之一，可感受航天精神与科学魅力。",
+    "audio": "https://example.com/audio/jiuquan.mp3"
+  },
+  {
+    "name": "秦安大地湾遗址",
+    "latitude": 34.8884,
+    "longitude": 105.6874,
+    "description": "大地湾遗址是新石器时代文化遗址，距今已有8000多年历史。",
+    "audio": "https://example.com/audio/dadiwan.mp3"
+  }
+  
+]
+
