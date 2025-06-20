@@ -1,12 +1,22 @@
-<view>
-  <view>当前定位：</view>
-  <view>纬度：{{latitude}}</view>
-  <view>经度：{{longitude}}</view>
+<view class="container">
+  <!-- 顶部标题栏 -->
+  <view class="header">AI语音导览</view>
 
+  <!-- 地图组件 -->
   <map 
-    latitude="{{latitude}}" 
-    longitude="{{longitude}}" 
-    scale="16" 
-    style="width: 100%; height: 300px;">
-  </map>
+    class="map"
+    latitude="{{latitude}}"
+    longitude="{{longitude}}"
+    scale="16"
+    markers="{{markers}}"
+    show-location="true"
+  ></map>
+
+  <!-- 底部浮层播放栏 -->
+  <view class="bottom-bar" wx:if="{{currentGuide}}">
+    <text class="guide-title">{{currentGuide.name}}</text>
+    <button bindtap="playAudio">
+      {{isPlaying ? '暂停' : '播放'}}
+    </button>
+  </view>
 </view>
