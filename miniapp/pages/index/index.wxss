@@ -28,5 +28,70 @@
 .guide-title {
   font-size: 32rpx;
 }
+/* 顶部景点信息卡 */
+.scene-card {
+  background: #fdf6ec;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin: 24rpx 0;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.06);
+}
+.scene-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+.scene-desc {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+}
+
+/* 风格选择器 */
+.style-title {
+  margin: 32rpx 0 12rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+.style-select {
+  display: flex;
+  gap: 16rpx;
+  flex-wrap: wrap;
+}
+.style-btn {
+  padding: 16rpx 32rpx;
+  background: #eee;
+  border-radius: 24rpx;
+  font-size: 26rpx;
+  color: #555;
+}
+.style-btn.active {
+  background: #3c9cff;
+  color: white;
+  font-weight: bold;
+}
+
+/* AI讲解输出区域 */
+.ai-output {
+  margin-top: 32rpx;
+  background: #f7f7f7;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.8;
+  max-height: 500rpx;
+  overflow-y: scroll;
+}
+
+/* 播放器按钮 */
+.player {
+  position: fixed;
+  bottom: 48rpx;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 
   

@@ -20,3 +20,28 @@
     </button>
   </view>
 </view>
+<!-- 景点卡片 -->
+<view class="scene-card">
+  <view class="scene-name">{{sceneName || "获取中..."}}</view>
+  <view class="scene-desc">当前位置自动识别的景点</view>
+</view>
+
+<!-- 风格选择器 -->
+<view class="style-title">🎧 请选择讲解风格</view>
+<view class="style-select">
+  <view wx:for="{{styles}}" wx:key="id" 
+        class="style-btn {{item === style ? 'active' : ''}}"
+        bindtap="onStyleTap" data-style="{{item}}">
+    {{item}}
+  </view>
+</view>
+
+<!-- 讲解文本区域 -->
+<view class="ai-output" wx:if="{{text}}">
+  <text>{{text}}</text>
+</view>
+
+<!-- 播放控制器 -->
+<view class="player">
+  <button type="primary" size="mini" bindtap="handlePlay">{{loading ? "生成中..." : "▶️ 播放讲解"}}</button>
+</view>
