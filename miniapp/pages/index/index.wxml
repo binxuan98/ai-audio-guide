@@ -12,36 +12,44 @@
     show-location="true"
   ></map>
 
-  <!-- 底部浮层播放栏 -->
-  <view class="bottom-bar" wx:if="{{currentGuide}}">
-    <text class="guide-title">{{currentGuide.name}}</text>
-    <button bindtap="playAudio">
-      {{isPlaying ? '暂停' : '播放'}}
+  <!-- 景点信息卡片 -->
+  <view class="scene-card">
+    <view class="scene-name">{{sceneName || "获取中..."}}</view>
+    <view class="scene-desc">当前位置自动识别的景点</view>
+  </view>
+
+  <!-- 风格选择器 -->
+  <view class="style-section">
+    <view class="style-title">🎧 请选择讲解风格</view>
+    <view class="style-select">
+      <view wx:for="{{styles}}" wx:key="*this" 
+            class="style-btn {{item === style ? 'active' : ''}}"
+            bindtap="onStyleTap" data-style="{{item}}">
+        {{item}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 讲解文本区域 -->
+  <view class="ai-output" wx:if="{{text}}">
+    <view class="output-title">📖 AI讲解内容</view>
+    <text class="output-text">{{text}}</text>
+  </view>
+
+  <!-- 播放控制器 -->
+  <view class="player">
+    <button type="primary" class="play-btn" bindtap="handlePlay" disabled="{{loading}}">
+      {{loading ? "生成中..." : "▶️ 播放讲解"}}
     </button>
   </view>
-</view>
-<!-- 景点卡片 -->
-<view class="scene-card">
-  <view class="scene-name">{{sceneName || "获取中..."}}</view>
-  <view class="scene-desc">当前位置自动识别的景点</view>
-</view>
 
-<!-- 风格选择器 -->
-<view class="style-title">🎧 请选择讲解风格</view>
-<view class="style-select">
-  <view wx:for="{{styles}}" wx:key="id" 
-        class="style-btn {{item === style ? 'active' : ''}}"
-        bindtap="onStyleTap" data-style="{{item}}">
-    {{item}}
+  <!-- 底部音频播放栏 -->
+  <view class="bottom-bar" wx:if="{{currentGuide && currentGuide.audio}}">
+    <view class="audio-info">
+      <text class="guide-title">{{currentGuide.name}}</text>
+    </view>
+    <button class="audio-btn" bindtap="playAudio">
+      {{isPlaying ? '⏸️' : '▶️'}}
+    </button>
   </view>
-</view>
-
-<!-- 讲解文本区域 -->
-<view class="ai-output" wx:if="{{text}}">
-  <text>{{text}}</text>
-</view>
-
-<!-- 播放控制器 -->
-<view class="player">
-  <button type="primary" size="mini" bindtap="handlePlay">{{loading ? "生成中..." : "▶️ 播放讲解"}}</button>
 </view>

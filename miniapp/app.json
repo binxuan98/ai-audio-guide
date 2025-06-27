@@ -3,12 +3,22 @@
     "pages/index/index"
   ],
   "window": {
-    "navigationBarTitleText": "AI语音导览"
+    "navigationBarTitleText": "AI语音导览",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f8f9fa",
+    "backgroundTextStyle": "light",
+    "enablePullDownRefresh": false
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
   },
   "permission": {
     "scope.userLocation": {
       "desc": "需要获取您的地理位置，用于地图导览"
     }
   },
-  "requiredPrivateInfos": ["getLocation"]
+  "requiredPrivateInfos": ["getLocation"],
+  "debug": false
 }
