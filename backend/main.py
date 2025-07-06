@@ -8,6 +8,9 @@ import time
 from typing import Optional, Dict, Any
 from datetime import datetime
 from config import get_config, validate_config
+from llm_service import init_llm_service, get_llm_service
+from tts_service import init_tts_service, get_tts_service
+from prompt_templates import get_available_guide_styles
 
 # 初始化配置
 config_obj = get_config()
@@ -26,6 +29,15 @@ if config_validation['errors']:
 # 确保必要的目录存在
 os.makedirs(config_obj.AUDIO_FOLDER, exist_ok=True)
 os.makedirs(config_obj.CACHE_FOLDER, exist_ok=True)
+
+print(f"📁 音频文件目录: {config_obj.AUDIO_FOLDER}")
+print(f"💾 缓存目录: {config_obj.CACHE_FOLDER}")
+
+# 初始化LLM和TTS服务
+print("🤖 初始化LLM服务...")
+llm_service = init_llm_service(config_obj.__dict__)
+print("🔊 初始化TTS服务...")
+tts_service = init_tts_service(config_obj.__dict__)
 
 # 计算两点间距离的函数（使用 Haversine 公式）
 def calculate_distance(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
@@ -82,55 +94,41 @@ LLM_CONFIG = config_obj.LLM_CONFIG
 GUIDE_STYLES = config_obj.GUIDE_STYLES
 
 # LLM 内容生成函数
-def generate_guide_content(spot_name: str, spot_description: str, style: str = "历史文化") -> Optional[str]:
+def generate_guide_content(spot_name: str, spot_description: str, guide_style: str = '历史文化', context: dict = None) -> str:
     """
-    使用大模型生成个性化讲解内容
+    使用大模型生成景点讲解内容
     
     Args:
         spot_name: 景点名称
         spot_description: 景点基础描述
-        style: 讲解风格（历史文化、趣闻轶事、诗词文学、人物故事等）
+        guide_style: 讲解风格
+        context: 上下文信息（时间、天气、游客类型等）
     
     Returns:
-        str: 生成的讲解内容，失败返回原描述
+        str: 生成的讲解内容
     """
     try:
-        # 获取风格配置
-        style_config = GUIDE_STYLES.get(style, GUIDE_STYLES["历史文化"])
-        prompt = style_config['prompt_template'].format(
+        # 使用新的LLM服务
+        llm_service = get_llm_service()
+        result = llm_service.generate_content(
             spot_name=spot_name,
-            spot_description=spot_description
+            spot_description=spot_description,
+            guide_style=guide_style,
+            context=context
         )
         
-        # 尝试调用各种LLM服务
-        for provider, config in LLM_CONFIG.items():
-            if not config.get('enabled', False):
-                continue
-                
-            try:
-                if provider == 'openai':
-                    result = call_openai_api(prompt, config)
-                    if result:
-                        return result
-                elif provider == 'qianwen':
-                    result = call_qianwen_api(prompt, config)
-                    if result:
-                        return result
-                elif provider == 'wenxin':
-                    result = call_wenxin_api(prompt, config)
-                    if result:
-                        return result
-            except Exception as e:
-                print(f"{provider} API调用失败: {e}")
-                continue
-        
-        # 如果所有API调用都失败，返回增强版的原描述
-        enhanced_description = f"欢迎来到{spot_name}。{spot_description}这里承载着深厚的历史文化底蕴，每一处景观都诉说着动人的故事。让我们一起探索这片神奇的土地，感受它独特的魅力吧！"
-        return enhanced_description
-        
+        if result['success']:
+            print(f"✅ LLM生成成功 - 提供商: {result['provider']}, 风格: {guide_style}")
+            return result['content']
+        else:
+            print(f"❌ LLM生成失败: {result.get('error', '未知错误')}")
+            return result.get('content', spot_description)
+            
     except Exception as e:
-        print(f"LLM 内容生成失败: {e}")
-        return spot_description
+        print(f"生成讲解内容失败: {e}")
+        # 返回增强的默认描述
+        enhanced_description = f"欢迎来到{spot_name}。{spot_description}这里有着丰富的历史文化内涵，值得我们细细品味和探索。"
+        return enhanced_description
 
 def call_openai_api(prompt: str, config: Dict[str, Any]) -> Optional[str]:
     """
@@ -218,55 +216,36 @@ def call_wenxin_api(prompt: str, config: Dict[str, Any]) -> Optional[str]:
     return None
 
 # TTS 转换函数（集成真实API）
-def text_to_speech(text: str, voice_style: str = None) -> Optional[str]:
+def text_to_speech(text: str, voice_style: str = 'default') -> Optional[str]:
     """
     将文本转换为语音文件链接
     支持多种TTS服务提供商
     
     Args:
         text: 要转换的文本
-        voice_style: 语音风格（可选）
+        voice_style: 语音风格
     
     Returns:
         str: 音频文件的 URL，如果转换失败则返回 None
     """
     try:
-        # 生成音频文件名（基于文本内容的哈希值）
-        text_hash = hashlib.md5(text.encode('utf-8')).hexdigest()
-        audio_filename = f"audio_{text_hash}.mp3"
-        audio_path = os.path.join(config_obj.AUDIO_FOLDER, audio_filename)
+        # 使用新的TTS服务
+        tts_service = get_tts_service()
+        result = tts_service.text_to_speech(
+            text=text,
+            voice_style=voice_style,
+            use_cache=True
+        )
         
-        # 如果音频文件已存在，直接返回URL
-        if os.path.exists(audio_path):
-            return f"/static/audio/{audio_filename}"
-        
-        # 尝试调用各种TTS服务
-        for provider, config in TTS_CONFIG.items():
-            if not config.get('enabled', False):
-                continue
-                
-            try:
-                if provider == 'baidu':
-                    result = call_baidu_tts(text, audio_path, config)
-                    if result:
-                        return f"/static/audio/{audio_filename}"
-                elif provider == 'azure':
-                    result = call_azure_tts(text, audio_path, config, voice_style)
-                    if result:
-                        return f"/static/audio/{audio_filename}"
-                elif provider == 'local':
-                    result = call_local_tts(text, audio_path, config)
-                    if result:
-                        return f"/static/audio/{audio_filename}"
-            except Exception as e:
-                print(f"{provider} TTS调用失败: {e}")
-                continue
-        
-        # 如果所有TTS方案都失败，返回None
-        return None
-        
+        if result['success']:
+            print(f"✅ TTS生成成功 - 提供商: {result['provider']}, 文件大小: {result.get('file_size', 0)} bytes")
+            return result['audio_url']
+        else:
+            print(f"❌ TTS生成失败: {result.get('error', '未知错误')}")
+            return None
+            
     except Exception as e:
-        print(f"TTS 转换失败: {e}")
+        print(f"TTS转换失败: {e}")
         return None
 
 def call_baidu_tts(text: str, audio_path: str, config: Dict[str, Any]) -> bool:
@@ -482,10 +461,20 @@ def get_nearest_spot():
         # 验证必需参数
         user_lat = data.get('latitude')
         user_lon = data.get('longitude')
-        enable_tts = data.get('enable_tts', False)
-        enable_llm = data.get('enable_llm', False)
+        enable_tts = data.get('enable_tts', True)  # 默认启用TTS
+        enable_llm = data.get('enable_llm', True)  # 默认启用LLM
         guide_style = data.get('guide_style', '历史文化')
         use_cache = data.get('use_cache', True)
+        voice_style = data.get('voice_style', 'default')  # 语音风格
+        
+        # 获取上下文信息
+        context = {
+            'time_of_day': data.get('time_of_day'),  # 时间段：morning, afternoon, evening, night
+            'weather': data.get('weather'),  # 天气：sunny, cloudy, rainy, snowy
+            'visitor_type': data.get('visitor_type'),  # 游客类型：family, student, elderly, young
+            'language': data.get('language', 'zh-CN'),  # 语言
+            'duration_preference': data.get('duration_preference', 'medium')  # 时长偏好：short, medium, long
+        }
         
         if user_lat is None or user_lon is None:
             return jsonify({
@@ -565,13 +554,14 @@ def get_nearest_spot():
                 generated_content = generate_guide_content(
                     nearest_spot['name'], 
                     nearest_spot['description'], 
-                    guide_style
+                    guide_style,
+                    context  # 传递上下文信息
                 )
             
             # 如果启用 TTS，生成音频
             audio_url = None
             if enable_tts:
-                audio_url = text_to_speech(generated_content)
+                audio_url = text_to_speech(generated_content, voice_style)  # 传递语音风格
             
             # 更新景点信息
             nearest_spot.update({
@@ -631,13 +621,8 @@ def get_guide_styles():
     }
     """
     try:
-        styles = []
-        for key, config in GUIDE_STYLES.items():
-            styles.append({
-                'key': key,
-                'name': config['name'],
-                'description': config['description']
-            })
+        # 使用新的prompt_templates模块
+        styles = get_available_guide_styles()
         
         return jsonify({
             'success': True,
@@ -668,6 +653,217 @@ def clear_cache_endpoint():
         return jsonify({
             'success': False,
             'message': f'缓存清理失败: {str(e)}'
+        }), 500
+
+# 添加批量生成内容的接口
+@app.route('/admin/batch-generate', methods=['POST'])
+def batch_generate_content():
+    """
+    批量生成景点讲解内容（管理员接口）
+    
+    请求体格式:
+    {
+        "styles": ["历史文化", "趣闻轶事"],  // 可选，默认所有风格
+        "enable_tts": true,  // 可选，是否同时生成音频
+        "voice_style": "default"  // 可选，语音风格
+    }
+    """
+    try:
+        data = request.get_json() or {}
+        
+        # 获取参数
+        styles = data.get('styles', ['历史文化', '趣闻轶事', '诗词文学', '人物故事', '科普知识', '民俗风情'])
+        enable_tts = data.get('enable_tts', False)
+        voice_style = data.get('voice_style', 'default')
+        
+        # 读取景点数据
+        spots = load_spots_data()
+        if not spots:
+            return jsonify({
+                'success': False,
+                'message': '暂无景点数据'
+            }), 404
+        
+        # 批量生成LLM内容
+        llm_service = get_llm_service()
+        llm_results = llm_service.batch_generate_content(spots, styles)
+        
+        # 如果启用TTS，批量生成音频
+        tts_results = {}
+        if enable_tts:
+            tts_service = get_tts_service()
+            
+            # 准备文本数据
+            texts = []
+            for spot_name, style_contents in llm_results.items():
+                for style, content_data in style_contents.items():
+                    texts.append({
+                        'id': f"{spot_name}_{style}",
+                        'content': content_data.get('content', '')
+                    })
+            
+            tts_results = tts_service.batch_generate_audio(texts, voice_style)
+        
+        return jsonify({
+            'success': True,
+            'data': {
+                'llm_results': llm_results,
+                'tts_results': tts_results,
+                'total_spots': len(spots),
+                'total_styles': len(styles),
+                'total_generated': len(llm_results) * len(styles)
+            },
+            'message': '批量生成完成'
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': f'批量生成失败: {str(e)}'
+        }), 500
+
+# 添加音频文件管理接口
+@app.route('/admin/audio/info', methods=['GET'])
+def get_audio_info():
+    """
+    获取音频文件信息（管理员接口）
+    """
+    try:
+        if not os.path.exists(config_obj.AUDIO_FOLDER):
+            return jsonify({
+                'success': True,
+                'data': {
+                    'total_files': 0,
+                    'total_size': 0,
+                    'files': []
+                }
+            })
+        
+        files_info = []
+        total_size = 0
+        
+        for filename in os.listdir(config_obj.AUDIO_FOLDER):
+            if filename.endswith('.mp3'):
+                file_path = os.path.join(config_obj.AUDIO_FOLDER, filename)
+                tts_service = get_tts_service()
+                file_info = tts_service.get_audio_info(file_path)
+                
+                if file_info.get('exists'):
+                    files_info.append({
+                        'filename': filename,
+                        'size': file_info['file_size'],
+                        'size_mb': file_info['file_size_mb'],
+                        'modified_time': file_info['modified_time']
+                    })
+                    total_size += file_info['file_size']
+        
+        return jsonify({
+            'success': True,
+            'data': {
+                'total_files': len(files_info),
+                'total_size': total_size,
+                'total_size_mb': round(total_size / (1024 * 1024), 2),
+                'files': files_info
+            }
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': f'获取音频信息失败: {str(e)}'
+        }), 500
+
+# 添加清理音频文件的接口
+@app.route('/admin/audio/cleanup', methods=['POST'])
+def cleanup_audio_files():
+    """
+    清理旧的音频文件（管理员接口）
+    
+    请求体格式:
+    {
+        "days": 7  // 清理多少天前的文件，默认7天
+    }
+    """
+    try:
+        data = request.get_json() or {}
+        days = data.get('days', 7)
+        
+        tts_service = get_tts_service()
+        result = tts_service.cleanup_old_audio_files(days)
+        
+        return jsonify({
+            'success': True,
+            'data': result,
+            'message': f'清理完成，删除了 {result["cleaned"]} 个文件'
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': f'清理音频文件失败: {str(e)}'
+        }), 500
+
+# 添加语音风格列表接口
+@app.route('/guide/voice-styles', methods=['GET'])
+def get_voice_styles():
+    """
+    获取可用的语音风格列表
+    
+    返回格式:
+    {
+        "success": true,
+        "data": {
+            "styles": [
+                {
+                    "key": "default",
+                    "name": "标准",
+                    "description": "标准语音风格"
+                }
+            ]
+        }
+    }
+    """
+    try:
+        voice_styles = [
+            {
+                'key': 'default',
+                'name': '标准',
+                'description': '标准语音风格，适合大多数场景'
+            },
+            {
+                'key': 'gentle',
+                'name': '温和',
+                'description': '温和亲切的语音风格，适合家庭游客'
+            },
+            {
+                'key': 'energetic',
+                'name': '活力',
+                'description': '充满活力的语音风格，适合年轻游客'
+            },
+            {
+                'key': 'warm',
+                'name': '温暖',
+                'description': '温暖感人的语音风格，适合情感类内容'
+            },
+            {
+                'key': 'professional',
+                'name': '专业',
+                'description': '专业严谨的语音风格，适合学术类内容'
+            }
+        ]
+        
+        return jsonify({
+            'success': True,
+            'data': {
+                'styles': voice_styles
+            },
+            'message': 'success'
+        })
+        
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'message': f'获取语音风格失败: {str(e)}'
         }), 500
 
 if __name__ == '__main__':
