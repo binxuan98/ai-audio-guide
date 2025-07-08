@@ -410,6 +410,16 @@ def clear_expired_cache():
     except Exception as e:
         print(f"清理缓存失败: {e}")
 
+@app.route("/", methods=["GET"])
+def index():
+    """根路由 - 服务状态"""
+    return jsonify({
+        "service": "AI语音导览后端服务",
+        "status": "running",
+        "version": "1.0.0",
+        "message": "服务正常运行"
+    })
+
 @app.route("/ping", methods=["GET"])
 def ping():
     """健康检查接口"""

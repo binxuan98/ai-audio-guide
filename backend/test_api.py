@@ -11,7 +11,7 @@ import json
 import time
 
 # 配置
-BASE_URL = 'http://localhost:5000'
+BASE_URL = 'http://localhost:5001'
 TEST_LAT = 36.0611  # 兰州大学纬度
 TEST_LNG = 103.8343  # 兰州大学经度
 

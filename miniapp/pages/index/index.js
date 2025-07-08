@@ -539,6 +539,11 @@ Page({
   
   /* ---------------- UI 交互 ---------------- */
   /** 选择讲解风格 **/
+  // 风格选择事件处理
+  onStyleTap(e) {
+    this.selectStyle(e);
+  },
+
   selectStyle(e) {
     const selectedStyle = e.currentTarget.dataset.style;
     
@@ -582,6 +587,21 @@ Page({
   },
   
   /** 带重试机制的讲解请求 **/
+ 
+   // 处理播放按钮点击事件
+   async handlePlay() {
+     logger.userAction('点击播放讲解按钮');
+     
+     // 如果已有讲解内容，直接播放
+     if (this.data.currentGuide && this.data.currentGuide.audio) {
+       await this.playAudio();
+       return;
+     }
+     
+     // 否则先生成讲解
+     await this.generateGuide();
+   },
+
   requestGuideWithRetry(params) {
     return this.retryOperation(
       () => this.requestGuide(params),

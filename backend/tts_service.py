@@ -124,6 +124,7 @@ class TTSService:
             for provider in providers:
                 try:
                     if self._is_tts_provider_available(provider):
+                        print(f"尝试使用 {provider} TTS")
                         result = self._call_tts_provider(
                             provider, text, audio_path, voice_style
                         )
@@ -138,15 +139,19 @@ class TTSService:
                                 'file_size': os.path.getsize(audio_path) if os.path.exists(audio_path) else 0,
                                 'generation_time': result.get('generation_time', 0)
                             }
+                        else:
+                            print(f"{provider} TTS 失败: {result.get('error', '未知错误')}")
                 except Exception as e:
                     print(f"TTS提供商 {provider} 调用失败: {e}")
                     continue
             
-            # 如果所有TTS都失败，返回错误
+            # 如果所有提供商都失败，返回错误信息
+            print("所有TTS服务不可用")
             return {
                 'success': False,
-                'error': '所有TTS服务都不可用',
-                'audio_url': None
+                'error': '所有TTS服务不可用，请检查TTS配置',
+                'audio_url': None,
+                'provider': 'none'
             }
             
         except Exception as e:
